@@ -1,33 +1,22 @@
-module "vpc" {
-
-    #source = "git::https://github.com/sravani1930/terraform-_vpc_module.git?ref=main"
-    source = "../../terraform_vpc_module"
-    project_name = var.project_name
-    environment = var.environment
-    public_subnet_cidr = var.public_subnet_cidr
-    private_subnet_cidr = var.private_subnet_cidr
-    database_subnet_cidr = var.database_subnet_cidr
-    is_peering_required = var.is_peering_required
-    
-
-}
-
 resource "aws_ssm_parameter" "vpc_id" {
   name  = "/${var.project_name}/${var.environment}/vpc_id"
   type  = "String"
   value = module.vpc.vpc_id
+  overwrite = true
 }
 
 resource "aws_ssm_parameter" "public_subnet_ids" {
   name  = "/${var.project_name}/${var.environment}/public_subnet_ids"
   type  = "StringList"
   value = join(",",module.vpc.public_subnet_ids)
+  overwrite = true
 }
 
 resource "aws_ssm_parameter" "private_subnet_ids" {
   name  = "/${var.project_name}/${var.environment}/private_subnet_ids"
   type  = "StringList"
   value = join(",",module.vpc.private_subnet_ids)
+  overwrite = true
 }
 
 resource "aws_ssm_parameter" "database_subnet_ids" {
@@ -35,11 +24,6 @@ resource "aws_ssm_parameter" "database_subnet_ids" {
   name  = "/${var.project_name}/${var.environment}/database_subnet_ids"
   type  = "StringList"
   value = join(",",module.vpc.database_subnet_ids)
-}
-# output "public_subnet_ids" {
-#     value = module.vpc.public_subnet_ids
-# }
+  overwrite = true
 
-# locals {
-#   public_subnet_ids = split(",", data.aws_ssm_parameter.public_subnets.value)
-# }
+}

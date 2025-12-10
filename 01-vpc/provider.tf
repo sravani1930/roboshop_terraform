@@ -9,7 +9,7 @@ terraform {
 
   backend "s3" {
     bucket = "devopsify-remote-state"
-    key    = "roboshop"
+    key    = "vpc/roboshop"
     region = "us-east-1"
     #dynamodb_table = "devopsify-locking"
     use_lockfile   = true

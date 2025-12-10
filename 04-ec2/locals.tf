@@ -1,0 +1,5 @@
+locals {
+    name = "${var.project_name}-${var.environment}"
+    database_subnet_ids = split(",", data.aws_ssm_parameter.database_subnet_ids.value)
+}
+
